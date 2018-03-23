@@ -1,17 +1,29 @@
+SRC	=	src/strlen.asm	\
+		src/strchr.asm	\
+		src/memset.asm	\
+		src/strstr.asm	\
+		src/memmove.asm	\
+		src/memcpy.asm	\
+		src/strcspn.asm	\
+		src/strpbrk.asm	\
+		src/rindex.asm	\
+		src/strncmp.asm	\
+		src/strcmp.asm	\
+		src/strcasecmp.asm
+
+OBJ	=	$(SRC:.asm=.o)
+
 NAME	=	libasm.so
+
+%.o:	%.asm
+	nasm -f elf64 $<
 
 all: $(NAME)
 
-$(NAME):
-	@nasm -f elf64 strlen.asm
-	@nasm -f elf64 strchr.asm
-	@nasm -f elf64 memset.asm
-	@nasm -f elf64 strcmp.asm
-	@nasm -f elf64 strncmp.asm
-	@nasm -f elf64 rindex.asm
-
+$(NAME): $(OBJ)
+	gcc -shared -o $@ $^
 clean:
-	rm -f *.o
+	rm -f $(OBJ)
 
 fclean: clean
 	rm -f $(NAME)
