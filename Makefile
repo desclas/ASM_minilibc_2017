@@ -21,7 +21,7 @@ NAME	=	libasm.so
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	gcc -shared -o $@ $^
+	ld -shared -o $@ $^
 clean:
 	rm -f $(OBJ)
 
